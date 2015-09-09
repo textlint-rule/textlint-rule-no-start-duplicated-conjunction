@@ -13,7 +13,7 @@
   },
   "version": "1.0.0",
   "description": "textlint rule that check no start with duplicated conjunction.",
-  "main": "lib/no-start-duplicated-conjunction-test.js",
+  "main": "lib/no-start-duplicated-conjunction.js",
   "files": [
     "lib",
     "src"
