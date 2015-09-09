@@ -38,4 +38,11 @@ describe("no-start-duplicated-conjunction", function () {
             assert(results.messages.length === 0);
         });
     });
+    context("when load from file", function () {
+        it("should report error", function () {
+            var results = textlint.lintFile(__dirname +"/fixtures/README.md");
+            console.log(results.messages);
+            assert(results.messages.length === 0);
+        });
+    });
 });

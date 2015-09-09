@@ -3,7 +3,7 @@
 const defaultOptions = {
     max: 2
 };
-const punctuation = /[。.?]/;
+const punctuation = /[。\?]/;
 const pointing = /[、,]/;
 function splitBySentence(text) {
     return text.split(punctuation);
@@ -24,12 +24,16 @@ export default function (context, options = defaultOptions) {
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {
                 var phrase = getFirstPhrase(sentence);
+                if (phrase.length === 0) {
+                    return;
+                }
                 if (previousPhases.indexOf(phrase) !== -1) {
                     useDuplicatedPhase = true;
                 }
 
                 if (useDuplicatedPhase) {
                     report(node, new RuleError(`don't repeat "${phrase}" in ${options.max} phrases`));
+                    useDuplicatedPhase = false;
                 }
                 // add first item
                 previousPhases.unshift(phrase);
