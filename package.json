@@ -1,0 +1,29 @@
+{
+  "name": "textlint-rule-no-start-duplicated-conjunction",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction.git"
+  },
+  "author": "azu",
+  "email": "azuciao@gmail.com",
+  "homepage": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction/issues"
+  },
+  "version": "1.0.0",
+  "description": "tezxtlint rule that check no start with duplicated conjunction.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "textlint"
+  ],
+  "devDependencies": {
+    "textlint": "^3.3.2"
+  }
+}
