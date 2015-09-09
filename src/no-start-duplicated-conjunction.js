@@ -3,7 +3,7 @@
 const defaultOptions = {
     max: 2
 };
-const punctuation = /[。.]/;
+const punctuation = /[。.?]/;
 const pointing = /[、,]/;
 function splitBySentence(text) {
     return text.split(punctuation);
@@ -11,28 +11,29 @@ function splitBySentence(text) {
 function getFirstPhase(sentence) {
     var phases = sentence.split(pointing);
     if (phases.length > 0) {
-        return phases[0];
+        return phases[0].trim();
     }
 }
 export default function (context, options = defaultOptions) {
     let {Syntax,getSource, report,RuleError} = context;
-    var previousPhase = null;
-    var count = 0;
+    var previousPhases = [];
+    var useDuplicatedPhase = false;
     return {
         [Syntax.Paragraph](node){
             var text = getSource(node);
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {
                 var phase = getFirstPhase(sentence);
-                if (phase == previousPhase) {
-                    count++;
-                } else {
-                    count = 0;
+                if (previousPhases.indexOf(phase) !== -1) {
+                    useDuplicatedPhase = true;
                 }
-                if (count => options.max) {
-                    report(node, new RuleContext(`don't repeat ${phase} >= ${options.max}`));
+
+                if (useDuplicatedPhase) {
+                    report(node, new RuleError(`don't repeat "${phase}" >= ${options.max}`));
                 }
-                previousPhase = phase;
+                // add first item
+                previousPhases.unshift(phase);
+                previousPhases = previousPhases.slice(0, options.max);
             });
         }
     }
