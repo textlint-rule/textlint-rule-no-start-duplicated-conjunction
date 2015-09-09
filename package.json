@@ -12,7 +12,7 @@
     "url": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction/issues"
   },
   "version": "1.0.0",
-  "description": "tezxtlint rule that check no start with duplicated conjunction.",
+  "description": "textlint rule that check no start with duplicated conjunction.",
   "main": "index.js",
   "directories": {
     "test": "test"
