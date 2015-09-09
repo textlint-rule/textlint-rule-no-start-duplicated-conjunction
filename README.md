@@ -23,6 +23,17 @@
 }
 ```
 
+## Example
+
+```
+But, A is ~.
+So, A is ~.
+But, A is ~.
+```
+
+This rule report Error => "don't repeat "But" in 2 phrases"
+
+
 ## Tests
 
     npm test

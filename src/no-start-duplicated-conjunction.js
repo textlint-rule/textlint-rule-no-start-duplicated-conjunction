@@ -8,10 +8,10 @@ const pointing = /[、,]/;
 function splitBySentence(text) {
     return text.split(punctuation);
 }
-function getFirstPhase(sentence) {
-    var phases = sentence.split(pointing);
-    if (phases.length > 0) {
-        return phases[0].trim();
+function getFirstPhrase(sentence) {
+    var phrases = sentence.split(pointing);
+    if (phrases.length > 0) {
+        return phrases[0].trim();
     }
 }
 export default function (context, options = defaultOptions) {
@@ -23,16 +23,16 @@ export default function (context, options = defaultOptions) {
             var text = getSource(node);
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {
-                var phase = getFirstPhase(sentence);
-                if (previousPhases.indexOf(phase) !== -1) {
+                var phrase = getFirstPhrase(sentence);
+                if (previousPhases.indexOf(phrase) !== -1) {
                     useDuplicatedPhase = true;
                 }
 
                 if (useDuplicatedPhase) {
-                    report(node, new RuleError(`don't repeat "${phase}" >= ${options.max}`));
+                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.max} phrases`));
                 }
                 // add first item
-                previousPhases.unshift(phase);
+                previousPhases.unshift(phrase);
                 previousPhases = previousPhases.slice(0, options.max);
             });
         }
