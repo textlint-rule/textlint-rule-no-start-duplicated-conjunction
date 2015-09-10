@@ -1,5 +1,6 @@
 // LICENSE : MIT
 "use strict";
+import ObjectAssign from "object-assign"
 const defaultOptions = {
     max: 2
 };
@@ -14,7 +15,8 @@ function getFirstPhrase(sentence) {
         return phrases[0].trim();
     }
 }
-export default function (context, options = defaultOptions) {
+export default function (context, options = {}) {
+    options = ObjectAssign(options, defaultOptions);
     let {Syntax,getSource, report,RuleError} = context;
     var previousPhases = [];
     var useDuplicatedPhase = false;
