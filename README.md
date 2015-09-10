@@ -17,7 +17,7 @@
 {
     "rules": {
         "no-start-duplicated-conjunction": {
-            "max" : 2 // max value of continuing sentence
+            "interval" : 2 // interval of sentences
         }
     }
 }
@@ -30,6 +30,7 @@ But, A is ~.
 So, A is ~.
 But, A is ~.
 ```
+(interval<=2)
 
 This rule report Error => "don't repeat "But" in 2 phrases"
 

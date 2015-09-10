@@ -2,13 +2,14 @@
 "use strict";
 import ObjectAssign from "object-assign"
 const defaultOptions = {
-    max: 2
+    interval: 2
 };
 const punctuation = /[。\?]/;
 const pointing = /[、,]/;
 function splitBySentence(text) {
     return text.split(punctuation);
 }
+// conjunction
 function getFirstPhrase(sentence) {
     var phrases = sentence.split(pointing);
     if (phrases.length > 0) {
@@ -34,12 +35,12 @@ export default function (context, options = {}) {
                 }
 
                 if (useDuplicatedPhase) {
-                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.max} phrases`));
+                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.interval} phrases`));
                     useDuplicatedPhase = false;
                 }
                 // add first item
                 previousPhases.unshift(phrase);
-                previousPhases = previousPhases.slice(0, options.max);
+                previousPhases = previousPhases.slice(0, options.interval);
             });
         }
     }
