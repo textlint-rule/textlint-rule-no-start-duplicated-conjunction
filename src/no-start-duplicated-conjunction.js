@@ -19,6 +19,7 @@ function getFirstPhrase(sentence) {
 }
 export default function (context, options = {}) {
     options = ObjectAssign({}, defaultOptions, options);
+    let helper = new RuleHelper(context);
     let {Syntax,getSource, report,RuleError} = context;
     var previousPhases = [];
     var useDuplicatedPhase = false;
