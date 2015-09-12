@@ -1,5 +1,7 @@
 // LICENSE : MIT
 "use strict";
+import {RuleHelper} from "textlint-rule-helper";
+import ObjectAssign from "object-assign";
 const defaultOptions = {
     max: 2
 };
@@ -14,12 +16,18 @@ function getFirstPhrase(sentence) {
         return phrases[0].trim();
     }
 }
-export default function (context, options = defaultOptions) {
+export default function (context, options) {
+    options = ObjectAssign({}, defaultOptions, options);
+    let helper = new RuleHelper(context);
     let {Syntax,getSource, report,RuleError} = context;
     var previousPhases = [];
     var useDuplicatedPhase = false;
     return {
         [Syntax.Paragraph](node){
+            if (helper.isChildNode(node, [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis])) {
+                return;
+            }
+
             var text = getSource(node);
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {

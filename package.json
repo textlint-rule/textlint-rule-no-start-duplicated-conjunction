@@ -36,5 +36,9 @@
     "mocha": "^2.3.2",
     "power-assert": "^1.0.0",
     "textlint": "^3.3.2"
+  },
+  "dependencies": {
+    "object-assign": "^4.0.1",
+    "textlint-rule-helper": "^1.1.3"
   }
 }
