@@ -1,6 +1,7 @@
 // LICENSE : MIT
 "use strict";
-import ObjectAssign from "object-assign"
+import {RuleHelper} from "textlint-rule-helper";
+import ObjectAssign from "object-assign";
 const defaultOptions = {
     interval: 2
 };
@@ -23,6 +24,10 @@ export default function (context, options = {}) {
     var useDuplicatedPhase = false;
     return {
         [Syntax.Paragraph](node){
+            if (helper.isChildNode(node, [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis])) {
+                return;
+            }
+
             var text = getSource(node);
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {
