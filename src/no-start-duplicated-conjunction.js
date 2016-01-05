@@ -5,7 +5,7 @@ import ObjectAssign from "object-assign";
 const defaultOptions = {
     interval: 2
 };
-const punctuation = /[。\?]/;
+const punctuation = /[。\n]/;
 const pointing = /[、,]/;
 function splitBySentence(text) {
     return text.split(punctuation);
