@@ -9,7 +9,9 @@ tester.run("no-start-duplicated-conjunction", rule, {
 しかし、〜。
 だが、〜。
 つまり、〜。`,
-
+        `
+[import, a.js](a.js)
+[import, b.js](b.js)`
     ],
     invalid: [
         // single match
@@ -21,7 +23,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
             errors: [
                 {
                     message: `don't repeat "しかし" in 2 phrases`,
-                    line: 2,
+                    line: 4,
                     column: 1
                 }
             ]
@@ -33,7 +35,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
             errors: [
                 {
                     message: `don't repeat "しかし" in 2 phrases`,
-                    line: 2,
+                    line: 3,
                     column: 1
                 }
             ]
@@ -47,6 +49,18 @@ tester.run("no-start-duplicated-conjunction", rule, {
                     message: `don't repeat "ルールは" in 2 phrases`,
                     line: 3,
                     column: 3
+                }
+            ]
+        },
+
+        {
+            text: `また、[import, a.js](a.js)
+また、[import, b.js](b.js)`,
+            errors: [
+                {
+                    message: `don't repeat "また" in 2 phrases`,
+                    line: 2,
+                    column: 1
                 }
             ]
         }

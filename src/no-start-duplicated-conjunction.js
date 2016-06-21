@@ -1,7 +1,9 @@
 // LICENSE : MIT
 "use strict";
-import {RuleHelper} from "textlint-rule-helper";
+import {RuleHelper, IgnoreNodeManager} from "textlint-rule-helper";
 import ObjectAssign from "object-assign";
+const splitSentence = require("sentence-splitter").split;
+const SentenceSyntax = require("sentence-splitter").Syntax;
 const defaultOptions = {
     interval: 2
 };
@@ -12,35 +14,47 @@ function splitBySentence(text) {
 }
 // conjunction
 function getFirstPhrase(sentence) {
-    var phrases = sentence.split(pointing);
+    var phrases = sentence.value.split(pointing);
     if (phrases.length > 0) {
         return phrases[0].trim();
     }
 }
 module.exports = function (context, options = {}) {
     options = ObjectAssign({}, defaultOptions, options);
-    let helper = new RuleHelper(context);
-    let {Syntax, getSource, report, RuleError} = context;
-    var previousPhases = [];
-    var useDuplicatedPhase = false;
+    const helper = new RuleHelper(context);
+    const ignoreNodeManager = new IgnoreNodeManager();
+    const {Syntax, getSource, report, RuleError} = context;
+    let previousPhases = [];
+    let useDuplicatedPhase = false;
     return {
         [Syntax.Paragraph](node){
-            if (helper.isChildNode(node, [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis])) {
+            const ignoreTypes = [Syntax.Code, Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis];
+            if (helper.isChildNode(node, ignoreTypes)) {
                 return;
             }
-            var text = getSource(node);
-            var sentences = splitBySentence(text);
+            ignoreNodeManager.ignoreChildrenByTypes(node, ignoreTypes);
+            const text = getSource(node);
+            const sentences = splitSentence(text, {
+                charRegExp: /[。\?\!？！]/
+            }).filter(sentence => {
+                return sentence.type === SentenceSyntax.Sentence;
+            });
             sentences.forEach(sentence => {
-                var phrase = getFirstPhrase(sentence);
+                const phrase = getFirstPhrase(sentence);
                 if (phrase.length === 0) {
                     return;
                 }
                 if (previousPhases.indexOf(phrase) !== -1) {
                     useDuplicatedPhase = true;
                 }
-
                 if (useDuplicatedPhase) {
-                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.interval} phrases`));
+                    if (ignoreNodeManager.isIgnoredRange(sentence.range)) {
+                        return;
+                    }
+                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.interval} phrases`, {
+                        line: Math.max(sentence.loc.start.line - 1, 0),
+                        column: sentence.loc.start.column
+                    }));
                     useDuplicatedPhase = false;
                 }
                 // add first item
@@ -49,4 +63,4 @@ module.exports = function (context, options = {}) {
             });
         }
     }
-}
+};
