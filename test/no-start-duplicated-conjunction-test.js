@@ -11,7 +11,14 @@ tester.run("no-start-duplicated-conjunction", rule, {
 つまり、〜。`,
         `
 [import, a.js](a.js)
-[import, b.js](b.js)`
+[import, b.js](b.js)`,
+
+        `[import, binary-example.js](src/binary-example.js)
+
+8進数はファイルのパーミッションを表現するのによく利用されています。
+
+[import, octal-example.js](src/octal-example.js)
+`
     ],
     invalid: [
         // single match
