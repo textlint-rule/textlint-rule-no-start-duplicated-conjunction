@@ -17,10 +17,10 @@ function getFirstPhrase(sentence) {
         return phrases[0].trim();
     }
 }
-export default function (context, options = {}) {
+module.exports = function (context, options = {}) {
     options = ObjectAssign({}, defaultOptions, options);
     let helper = new RuleHelper(context);
-    let {Syntax,getSource, report,RuleError} = context;
+    let {Syntax, getSource, report, RuleError} = context;
     var previousPhases = [];
     var useDuplicatedPhase = false;
     return {
@@ -28,7 +28,6 @@ export default function (context, options = {}) {
             if (helper.isChildNode(node, [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis])) {
                 return;
             }
-
             var text = getSource(node);
             var sentences = splitBySentence(text);
             sentences.forEach(sentence => {
