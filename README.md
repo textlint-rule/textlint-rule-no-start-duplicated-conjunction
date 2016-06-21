@@ -34,6 +34,18 @@ But, A is ~.
 
 This rule report Error => "don't repeat "But" in 2 phrases"
 
+### Exception
+
+Ignore following link nodes:
+
+
+```markdown
+[import, a.js](a.js)
+[import, b.js](b.js)
+```
+
+No error
+
 
 ## Tests
 
