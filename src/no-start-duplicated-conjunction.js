@@ -48,13 +48,13 @@ module.exports = function (context, options = {}) {
                     useDuplicatedPhase = true;
                 }
                 if (useDuplicatedPhase) {
-                    if (ignoreNodeManager.isIgnoredRange(sentence.range)) {
-                        return;
+                    const sentenceStartIndex = node.range[0] + sentence.range[0];
+                    if (!ignoreNodeManager.isIgnoredIndex(sentenceStartIndex)) {
+                        report(node, new RuleError(`Don't repeat "${phrase}" in ${options.interval} phrases`, {
+                            line: Math.max(sentence.loc.start.line - 1, 0),
+                            column: sentence.loc.start.column
+                        }));
                     }
-                    report(node, new RuleError(`don't repeat "${phrase}" in ${options.interval} phrases`, {
-                        line: Math.max(sentence.loc.start.line - 1, 0),
-                        column: sentence.loc.start.column
-                    }));
                     useDuplicatedPhase = false;
                 }
                 // add first item

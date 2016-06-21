@@ -3,6 +3,7 @@
 import rule from "../src/no-start-duplicated-conjunction"
 const TextLintTester = require("textlint-tester");
 const tester = new TextLintTester();
+const fs = require("fs");
 tester.run("no-start-duplicated-conjunction", rule, {
     valid: [
         `
@@ -18,7 +19,11 @@ tester.run("no-start-duplicated-conjunction", rule, {
 8進数はファイルのパーミッションを表現するのによく利用されています。
 
 [import, octal-example.js](src/octal-example.js)
-`
+`,
+        {
+            // Real Example
+            text: fs.readFileSync(__dirname + "/fixtures/ok.md", "utf-8")
+        }
     ],
     invalid: [
         // single match
@@ -29,7 +34,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
 しかし、〜。`,
             errors: [
                 {
-                    message: `don't repeat "しかし" in 2 phrases`,
+                    message: `Don't repeat "しかし" in 2 phrases`,
                     line: 4,
                     column: 1
                 }
@@ -41,7 +46,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
 しかし、〜。`,
             errors: [
                 {
-                    message: `don't repeat "しかし" in 2 phrases`,
+                    message: `Don't repeat "しかし" in 2 phrases`,
                     line: 3,
                     column: 1
                 }
@@ -53,7 +58,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
 - ルールは、設定値などがJavaScriptで表現でき、npmで共有できる作りになっている`,
             errors: [
                 {
-                    message: `don't repeat "ルールは" in 2 phrases`,
+                    message: `Don't repeat "ルールは" in 2 phrases`,
                     line: 3,
                     column: 3
                 }
@@ -65,7 +70,7 @@ tester.run("no-start-duplicated-conjunction", rule, {
 また、[import, b.js](b.js)`,
             errors: [
                 {
-                    message: `don't repeat "また" in 2 phrases`,
+                    message: `Don't repeat "また" in 2 phrases`,
                     line: 2,
                     column: 1
                 }
