@@ -26,9 +26,14 @@ tester.run("no-start-duplicated-conjunction", rule, {
 [![DevDependency Status][daviddm-dev-image]][daviddm-dev-url]
 [![License][license-image]][license-url]
 `,
+        // Real Example
         {
-            // Real Example
+
             text: fs.readFileSync(__dirname + "/fixtures/ok.md", "utf-8")
+        },
+        {
+            text: fs.readFileSync(__dirname + "/fixtures/example.txt", "utf-8"),
+            ext: ".txt"
         }
     ],
     invalid: [

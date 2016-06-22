@@ -38,7 +38,7 @@ module.exports = function (context, options = {}) {
             ignoreNodeManager.ignoreChildrenByTypes(node, ignoreTypes);
             const text = getSource(node);
             const sentences = splitSentence(text, {
-                charRegExp: /[。\?\!？！]/
+                charRegExp: /[。]/
             }).filter(sentence => {
                 return sentence.type === SentenceSyntax.Sentence;
             });
