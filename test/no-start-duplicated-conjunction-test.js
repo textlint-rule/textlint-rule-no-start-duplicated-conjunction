@@ -20,6 +20,12 @@ tester.run("no-start-duplicated-conjunction", rule, {
 
 [import, octal-example.js](src/octal-example.js)
 `,
+        // ignore Image
+        `
+[![Build Status][travis-image]][travis-url]
+[![DevDependency Status][daviddm-dev-image]][daviddm-dev-url]
+[![License][license-image]][license-url]
+`,
         {
             // Real Example
             text: fs.readFileSync(__dirname + "/fixtures/ok.md", "utf-8")

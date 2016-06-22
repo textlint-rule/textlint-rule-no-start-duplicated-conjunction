@@ -28,7 +28,10 @@ module.exports = function (context, options = {}) {
     let useDuplicatedPhase = false;
     return {
         [Syntax.Paragraph](node){
-            const ignoreTypes = [Syntax.Code, Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis];
+            // FIXME: linkReference should be defined in TxtAST.
+            const ignoreTypes = [
+                Syntax.Code, Syntax.Link, "linkReference", Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis
+            ];
             if (helper.isChildNode(node, ignoreTypes)) {
                 return;
             }
@@ -49,6 +52,8 @@ module.exports = function (context, options = {}) {
                 }
                 if (useDuplicatedPhase) {
                     const sentenceStartIndex = node.range[0] + sentence.range[0];
+                    console.log(ignoreNodeManager);
+                    console.log(sentenceStartIndex);
                     if (!ignoreNodeManager.isIgnoredIndex(sentenceStartIndex)) {
                         report(node, new RuleError(`Don't repeat "${phrase}" in ${options.interval} phrases`, {
                             line: Math.max(sentence.loc.start.line - 1, 0),
