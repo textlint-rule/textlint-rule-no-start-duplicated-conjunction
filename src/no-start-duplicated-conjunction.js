@@ -52,8 +52,6 @@ module.exports = function (context, options = {}) {
                 }
                 if (useDuplicatedPhase) {
                     const sentenceStartIndex = node.range[0] + sentence.range[0];
-                    console.log(ignoreNodeManager);
-                    console.log(sentenceStartIndex);
                     if (!ignoreNodeManager.isIgnoredIndex(sentenceStartIndex)) {
                         report(node, new RuleError(`Don't repeat "${phrase}" in ${options.interval} phrases`, {
                             line: Math.max(sentence.loc.start.line - 1, 0),
