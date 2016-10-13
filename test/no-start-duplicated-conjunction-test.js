@@ -26,6 +26,22 @@ tester.run("no-start-duplicated-conjunction", rule, {
 [![DevDependency Status][daviddm-dev-image]][daviddm-dev-url]
 [![License][license-image]][license-url]
 `,
+        // reset count on Header
+        `
+しかし、〜。
+
+# Header
+
+しかし、〜。
+`,
+        // reset count on HorizontalRule
+        `
+しかし、〜。
+
+----
+
+しかし、〜。
+`,
         // Real Example
         {
 

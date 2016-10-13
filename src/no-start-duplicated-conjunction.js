@@ -7,11 +7,7 @@ const SentenceSyntax = require("sentence-splitter").Syntax;
 const defaultOptions = {
     interval: 2
 };
-const punctuation = /[。\n]/;
 const pointing = /[、,]/;
-function splitBySentence(text) {
-    return text.split(punctuation);
-}
 // conjunction
 function getFirstPhrase(sentence) {
     var phrases = sentence.value.split(pointing);
@@ -19,7 +15,7 @@ function getFirstPhrase(sentence) {
         return phrases[0].trim();
     }
 }
-module.exports = function (context, options = {}) {
+module.exports = function(context, options = {}) {
     options = ObjectAssign({}, defaultOptions, options);
     const helper = new RuleHelper(context);
     const ignoreNodeManager = new IgnoreNodeManager();
@@ -27,6 +23,13 @@ module.exports = function (context, options = {}) {
     let previousPhases = [];
     let useDuplicatedPhase = false;
     return {
+        // reset count
+        [Syntax.Header](){
+            previousPhases = [];
+        },
+        [Syntax.HorizontalRule](){
+            previousPhases = []
+        },
         [Syntax.Paragraph](node){
             // FIXME: linkReference should be defined in TxtAST.
             const ignoreTypes = [
