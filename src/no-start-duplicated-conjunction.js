@@ -4,6 +4,7 @@ import {RuleHelper, IgnoreNodeManager} from "textlint-rule-helper";
 import ObjectAssign from "object-assign";
 const splitSentence = require("sentence-splitter").split;
 const SentenceSyntax = require("sentence-splitter").Syntax;
+import StringSource from "textlint-util-to-string";
 const defaultOptions = {
     interval: 2
 };
@@ -39,7 +40,8 @@ module.exports = function(context, options = {}) {
                 return;
             }
             ignoreNodeManager.ignoreChildrenByTypes(node, ignoreTypes);
-            const text = getSource(node);
+            const source = new StringSource(node);
+            const text = source.toString();
             const sentences = splitSentence(text, {
                 charRegExp: /[。]/
             }).filter(sentence => {
@@ -55,7 +57,12 @@ module.exports = function(context, options = {}) {
                 }
                 if (useDuplicatedPhase) {
                     const sentenceStartIndex = node.range[0] + sentence.range[0];
-                    if (!ignoreNodeManager.isIgnoredIndex(sentenceStartIndex)) {
+                    const originalIndex = source.originalIndexFromIndex(sentenceStartIndex);
+                    // adjust index 
+                    // if  "また、[import, a.js](a.js)" then originalIndex is used.
+                    // if "[import, binary-example.js](src/binary-example.js)" then  originalIndex is undefined.
+                    const targetIndex = typeof originalIndex !== "undefined" ? originalIndex : sentenceStartIndex;
+                    if (!ignoreNodeManager.isIgnoredIndex(targetIndex)) {
                         report(node, new RuleError(`Don't repeat "${phrase}" in ${options.interval} phrases`, {
                             line: Math.max(sentence.loc.start.line - 1, 0),
                             column: sentence.loc.start.column
