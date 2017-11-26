@@ -44,6 +44,7 @@
   "dependencies": {
     "object-assign": "^4.0.1",
     "sentence-splitter": "^2.0.0",
-    "textlint-rule-helper": "^2.0.0"
+    "textlint-rule-helper": "^2.0.0",
+    "textlint-util-to-string": "^2.1.1"
   }
 }
