@@ -61,7 +61,8 @@ module.exports = function(context, options = {}) {
                     // adjust index 
                     // if  "また、[import, a.js](a.js)" then originalIndex is used.
                     // if "[import, binary-example.js](src/binary-example.js)" then  originalIndex is undefined.
-                    if (!ignoreNodeManager.isIgnoredIndex(typeof originalIndex !== "undefined" ? originalIndex : sentenceStartIndex)) {
+                    const targetIndex = typeof originalIndex !== "undefined" ? originalIndex : sentenceStartIndex;
+                    if (!ignoreNodeManager.isIgnoredIndex(targetIndex)) {
                         report(node, new RuleError(`Don't repeat "${phrase}" in ${options.interval} phrases`, {
                             line: Math.max(sentence.loc.start.line - 1, 0),
                             column: sentence.loc.start.column
