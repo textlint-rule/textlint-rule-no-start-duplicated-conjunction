@@ -1,6 +1,6 @@
-# textlint-rule-no-start-duplicated-conjunction
+# textlint-rule-no-start-duplicated-conjunction [![Build Status](https://travis-ci.org/textlint-rule/textlint-rule-no-start-duplicated-conjunction.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-no-start-duplicated-conjunction)
 
-[textlint](https://github.com/azu/textlint "textlint") rule that check no start with duplicated conjunction.
+[textlint](https://github.com/textlint-rule/textlint "textlint") rule that check no start with duplicated conjunction.
 
 ## Installation
 
@@ -13,7 +13,7 @@
     
 ## Config
 
-```js
+```json5
 {
     "rules": {
         "no-start-duplicated-conjunction": {
@@ -62,6 +62,7 @@ No error
 ## License
 
 MIT
+
 ## Reference
 
 - [[022388]文頭の接続詞の連続や、文末の表記の連続などをチェックする](http://support.justsystems.com/faq/1032/app/servlet/qadoc?QID=022388 "[022388]文頭の接続詞の連続や、文末の表記の連続などをチェックする")

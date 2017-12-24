@@ -2,14 +2,14 @@
   "name": "textlint-rule-no-start-duplicated-conjunction",
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction.git"
+    "url": "https://github.com/textlint-rule/textlint-rule-no-start-duplicated-conjunction.git"
   },
   "author": "azu",
   "email": "azuciao@gmail.com",
-  "homepage": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction",
+  "homepage": "https://github.com/textlint-rule/textlint-rule-no-start-duplicated-conjunction",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/azu/textlint-rule-no-start-duplicated-conjunction/issues"
+    "url": "https://github.com/textlint-rule/textlint-rule-no-start-duplicated-conjunction/issues"
   },
   "version": "1.1.4",
   "description": "textlint rule that check no start with duplicated conjunction.",
