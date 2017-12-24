@@ -1,6 +1,7 @@
 // LICENSE : MIT
 "use strict";
-import rule from "../src/no-start-duplicated-conjunction"
+import rule from "../src/no-start-duplicated-conjunction";
+
 const TextLintTester = require("textlint-tester");
 const tester = new TextLintTester();
 const fs = require("fs");
@@ -44,7 +45,6 @@ tester.run("no-start-duplicated-conjunction", rule, {
 `,
         // Real Example
         {
-
             text: fs.readFileSync(__dirname + "/fixtures/ok.md", "utf-8")
         },
         {
@@ -54,6 +54,20 @@ tester.run("no-start-duplicated-conjunction", rule, {
     ],
     invalid: [
         // single match
+        {
+            text: `
+But, A is A.
+So, B is B.
+But, Ais C.
+`,
+            errors: [
+                {
+                    message: `Don't repeat "But" in 2 phrases`,
+                    line: 4,
+                    column: 1
+                }
+            ]
+        },
         {
             text: `
 しかし、〜。
@@ -87,14 +101,14 @@ tester.run("no-start-duplicated-conjunction", rule, {
                 {
                     message: `Don't repeat "ルールは" in 2 phrases`,
                     line: 3,
-                    column: 3
+                    column: 1
                 }
             ]
         },
 
         {
-            text: `また、[import, a.js](a.js)
-また、[import, b.js](b.js)`,
+            text: `また、[link](a.js)についてです。
+また、[link](b.js)についです。`,
             errors: [
                 {
                     message: `Don't repeat "また" in 2 phrases`,
