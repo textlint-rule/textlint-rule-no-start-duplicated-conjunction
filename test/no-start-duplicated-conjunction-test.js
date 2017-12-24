@@ -50,6 +50,12 @@ tester.run("no-start-duplicated-conjunction", rule, {
         {
             text: fs.readFileSync(__dirname + "/fixtures/example.txt", "utf-8"),
             ext: ".txt"
+        },
+        {
+            text: `
+この **A** です。
+この **B** です。     
+`
         }
     ],
     invalid: [

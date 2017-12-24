@@ -9,19 +9,23 @@ const SentenceSyntax = require("sentence-splitter").Syntax;
 const defaultOptions = {
     interval: 2
 };
-const pointing = /[、,]/;
+const PointingPattern = /[、,]/;
 
 // conjunction
 /**
  * get first node value
  * @param node
- * @returns {string|undefined}
+ * @returns {string}
  */
 function getFirstPhrase(node) {
-    const phrases = node.value.split(pointing);
+    if (!PointingPattern.test(node.value)) {
+        return "";
+    }
+    const phrases = node.value.split(PointingPattern);
     if (phrases.length > 0) {
         return phrases[0].trim();
     }
+    return "";
 }
 
 module.exports = function(context, options = {}) {
