@@ -56,6 +56,17 @@ tester.run("no-start-duplicated-conjunction", rule, {
 この **A** です。
 この **B** です。     
 `
+        },
+        {
+            text: `
+また、Aです。
+This is Sentence. // <= 2 sentence
+This is Sentence.
+また、Bです。     
+`,
+            options: {
+                interval: 2
+            }
         }
     ],
     invalid: [

@@ -35,6 +35,13 @@ module.exports = function(context, options = {}) {
     const { Syntax, getSource, report, RuleError } = context;
     let previousPhases = [];
     let useDuplicatedPhase = false;
+    const addUsedPhase = phase => {
+        // Add first item
+        previousPhases.unshift(phase);
+        // slice by interval
+        // max limit `interval`
+        previousPhases = previousPhases.slice(0, options.interval);
+    };
     return {
         // reset count
         [Syntax.Header]() {
@@ -63,14 +70,15 @@ module.exports = function(context, options = {}) {
             sentences.forEach(sentence => {
                 const firstChild = sentence.children[0];
                 if (!firstChild) {
-                    return;
+                    return addUsedPhase("");
                 }
                 if (firstChild.type !== Syntax.Str) {
-                    return;
+                    return addUsedPhase("");
                 }
                 const phrase = getFirstPhrase(firstChild);
+                // add first item
                 if (phrase.length === 0) {
-                    return;
+                    return addUsedPhase("");
                 }
                 if (previousPhases.indexOf(phrase) !== -1) {
                     useDuplicatedPhase = true;
@@ -84,9 +92,7 @@ module.exports = function(context, options = {}) {
                     }
                     useDuplicatedPhase = false;
                 }
-                // add first item
-                previousPhases.unshift(phrase);
-                previousPhases = previousPhases.slice(0, options.interval);
+                addUsedPhase(phrase);
             });
         }
     };
